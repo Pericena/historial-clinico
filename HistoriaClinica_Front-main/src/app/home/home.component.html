@@ -1,0 +1,51 @@
+<nz-layout class="home-layout">
+  <nz-content
+    class="home-content"
+    [ngStyle]="{
+      'background-size': 'cover',
+      'background-position': 'center'
+    }"
+  >
+    <h1 nz-typography class="home-title">Bienvenido al Sistema de Gestión Clínica</h1>
+
+    <p nz-paragraph class="home-description">
+      Este sistema está diseñado para facilitar la administración de tu clínica, permitiéndote gestionar pacientes, citas, historiales médicos y mucho más de forma sencilla y eficiente.
+    </p>
+
+    <h2 nz-typography class="home-subtitle">Características Principales:</h2>
+    <ul nz-typography class="feature-list">
+      <p>Gestión completa de pacientes y sus historiales médicos
+        <br>
+        Organización y seguimiento de citas y horarios
+        <br>
+        Acceso seguro y controlado a la información
+        <br>
+        Interfaz amigable y fácil de usar
+      </p>
+    </ul>
+
+    <div class="button-group">
+      <button
+        nz-button
+        nzType="primary"
+        nzShape="round"
+        nzSize="large"
+        class="action-button"
+        (click)="goToLogin()"
+      >
+        Iniciar Sesión
+      </button>
+
+      <button
+        nz-button
+        nzType="default"
+        nzShape="round"
+        nzSize="large"
+        class="action-button"
+        (click)="goToRegister()"
+      >
+        Registrarse
+      </button>
+    </div>
+  </nz-content>
+</nz-layout>
