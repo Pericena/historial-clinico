@@ -5,12 +5,14 @@
       nzBreakpoint="md"
       [(nzCollapsed)]="isCollapsed"
       [nzTrigger]="null">
-      <div class="sidebar-logo">
-        <a href="https://ng.ant.design/" target="_blank">
-          <img src="assets/images/electronic_medical_records_logo.jpg" alt="logo">
-          <h1>SSVS</h1>
+
+      <div class="flex items-center space-x-2 p-4">
+        <a href="#" target="_blank" class="flex items-center space-x-2">
+          <img src="assets/images/electronic_medical_records_logo.jpg" alt="logo" class="w-10 h-10">
+          <h1 class="text-xl font-semibold text-blue-500">Clinica</h1>
         </a>
       </div>
+
       <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
         <li nz-submenu nzOpen nzTitle="Usuarios" nzIcon="dashboard">
           <ul>
@@ -34,7 +36,7 @@
                 <a routerLink="/registro/especialidades">Gestionar Especialidades</a>
               </li>
               <li nz-menu-item nzMatchRouter> 
-                <a routerLink="registro/departamentos">Gestionar Departamentos</a>
+                <a routerLink="registro/departamentos">Gestionar Area De Atencion</a>
               </li>
               <li nz-menu-item nzMatchRouter> 
                 <a routerLink="registro/servicios">Gestionar Servicios</a>
@@ -68,8 +70,10 @@
             </ul>
           </li>
       </ul>
+
     </nz-sider>
     <nz-layout>
+      
       <nz-header>
         <div class="app-header">
           <div class="left-section">
@@ -90,7 +94,8 @@
               class="user-action"
             >
               <nz-avatar nzSize="small" nzSrc="assets/images/modern_user_profile_logo.jpg" nzIcon="user"></nz-avatar>
-              <span class="user-name">Hello {{ userName }} 👋</span>
+              <span class="text-white">Hello {{ userName }} 👋</span>
+
             </a>
             <ng-template #menuTemplate>
               <ul nz-menu>
@@ -107,6 +112,7 @@
           </div>
         </div>
       </nz-header>
+
       <nz-content>
         <div class="inner-content">
           <router-outlet></router-outlet>

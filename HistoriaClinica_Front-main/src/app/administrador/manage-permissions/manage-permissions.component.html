@@ -1,44 +1,57 @@
-<div class="permissions-container">
-    <h2>Gestionar Permisos</h2>
-    <nz-form [formGroup]="form" nzLayout="vertical">
-      <nz-form-item>
-        <nz-form-label>Rol:</nz-form-label>
-        <nz-form-control>
-          <nz-select
-            formControlName="selectedRole"
-            nzPlaceHolder="Selecciona un rol"
-            (ngModelChange)="onRoleChange($event)"
-          >
-            <nz-option
-              *ngFor="let role of roles"
-              [nzLabel]="role.nombre"
-              [nzValue]="role.id"
-            ></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-  
-      <nz-form-item *ngIf="selectedRoleId">
-        <nz-form-label>Permisos:</nz-form-label>
-        <nz-form-control>
-          <label nz-checkbox
+<div class="permissions-container p-6 bg-white rounded-lg shadow-sm mt-6 transition-all ease-in-out duration-300 max-w-xl mx-auto">
+  <h2 class="text-3xl font-semibold text-center text-blue-600 mb-6 uppercase tracking-wide">Gestionar Permisos</h2>
+  <nz-form [formGroup]="form" nzLayout="vertical">
+    
+    <!-- Sección de selección de rol -->
+    <nz-form-item class="mb-6">
+      <nz-form-label class="text-base font-medium text-gray-600">Rol:</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          formControlName="selectedRole"
+          nzPlaceHolder="Selecciona un rol"
+          (ngModelChange)="onRoleChange($event)"
+          class="w-full border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+        >
+          <nz-option
+            *ngFor="let role of roles"
+            [nzLabel]="role.nombre"
+            [nzValue]="role.id"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Sección de permisos -->
+    <nz-form-item *ngIf="selectedRoleId" class="mb-6">
+      <nz-form-label class="text-base font-medium text-gray-600">Permisos</nz-form-label>
+      <nz-form-control>
+        <div class="space-y-3">
+          <label
+            nz-checkbox
             *ngFor="let permission of permissions"
             [nzChecked]="rolePermissions.includes(permission.id)"
             (nzCheckedChange)="togglePermission(permission.id, $event)"
-            class="permission-item"
+            class="permission-item flex items-center space-x-2 text-sm text-gray-700"
           >
-            {{ permission.nombre }}
+            <span>{{ permission.nombre }}</span>
           </label>
-        </nz-form-control>
-      </nz-form-item>
-  
-      <nz-form-item>
-        <nz-form-control>
-          <button nz-button nzType="primary" (click)="savePermissions()" [disabled]="!selectedRoleId">
-            Guardar
-          </button>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-form>
-  </div>
-  
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Botón de guardar -->
+    <nz-form-item>
+      <nz-form-control>
+        <button
+          nz-button
+          nzType="primary"
+          (click)="savePermissions()"
+          [disabled]="!selectedRoleId"
+          class="w-auto px-4 py-2 text-white rounded-md bg-blue-600 hover:bg-blue-500 focus:ring-2 focus:ring-blue-600 transition duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          Guardar
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-form>
+</div>

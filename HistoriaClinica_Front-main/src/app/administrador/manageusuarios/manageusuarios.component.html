@@ -1,13 +1,20 @@
-<div class="usuarios-container">
-    <h2>Administrar Usuarios</h2>
+<div class="usuarios-container p-6 bg-white rounded-lg shadow-lg mt-6 transition-all ease-in-out duration-300">
+  <h2 class="text-3xl font-semibold text-center text-blue-600 mb-6 uppercase tracking-wide">Administrar Usuarios</h2>
   
-    <nz-input-group [nzSuffix]="suffixIcon">
-      <input type="text" nz-input placeholder="Buscar por nombre, CI, apellido..." [(ngModel)]="searchTerm" (input)="filterUsuarios()" />
-    </nz-input-group>
-    <ng-template #suffixIcon>
-      <span nz-icon nzType="search"></span>
-    </ng-template>
-  
+  <!-- Campo de búsqueda -->
+  <div class="mb-6">
+    <div class="relative">
+      <nz-input-group [nzSuffix]="suffixIcon">
+        <input type="text" nz-input placeholder="Buscar por nombre, CI, apellido..." [(ngModel)]="searchTerm" (input)="filterUsuarios()" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </nz-input-group>
+      <ng-template #suffixIcon>
+        <span nz-icon nzType="search" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"></span>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Tabla de usuarios -->
+  <div class="overflow-x-auto">
     <nz-table
       #filterTable
       [nzData]="usuariosFiltrados"
@@ -17,44 +24,46 @@
       (nzPageIndexChange)="onPageChange($event)"
       [nzTotal]="total"
       [nzShowPagination]="false"
+      class="w-full table-auto border-collapse shadow-sm"
     >
       <thead>
-        <tr>
-          <th>ID</th>
-          <th>CI</th>
-          <th>Nombre</th>
-          <th>Apellido Paterno</th>
-          <th>Apellido Materno</th>
-          <th>Fecha de Nacimiento</th>
-          <th>Correo</th>
-          <th>Teléfono</th>
-          <th>Género</th>
-          <th>Estado</th>
+        <tr class="bg-gray-100 text-left text-gray-700">
+          <th class="py-3 px-4 border-b">ID</th>
+          <th class="py-3 px-4 border-b">CI</th>
+          <th class="py-3 px-4 border-b">Nombre</th>
+          <th class="py-3 px-4 border-b">Apellido Paterno</th>
+          <th class="py-3 px-4 border-b">Apellido Materno</th>
+          <th class="py-3 px-4 border-b">Fecha de Nacimiento</th>
+          <th class="py-3 px-4 border-b">Correo</th>
+          <th class="py-3 px-4 border-b">Teléfono</th>
+          <th class="py-3 px-4 border-b">Género</th>
+          <th class="py-3 px-4 border-b">Estado</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let usuario of usuariosFiltrados | slice: (currentPage - 1) * itemsPerPage : currentPage * itemsPerPage">
-          <td>{{ usuario.id }}</td>
-          <td>{{ usuario.ci }}</td>
-          <td>{{ usuario.nombre }}</td>
-          <td>{{ usuario.apellido_paterno }}</td>
-          <td>{{ usuario.apellido_materno }}</td>
-          <td>{{ usuario.fecha_nacimiento | date }}</td>
-          <td>{{ usuario.username }}</td>
-          <td>{{ usuario.telefono || 'No disponible' }}</td>
-          <td>{{ usuario.genero || 'No especificado' }}</td>
-          <td>{{ usuario.estado || 'Inactivo' }}</td>
+        <tr *ngFor="let usuario of usuariosFiltrados | slice: (currentPage - 1) * itemsPerPage : currentPage * itemsPerPage" class="hover:bg-gray-50">
+          <td class="py-3 px-4 border-b">{{ usuario.id }}</td>
+          <td class="py-3 px-4 border-b">{{ usuario.ci }}</td>
+          <td class="py-3 px-4 border-b">{{ usuario.nombre }}</td>
+          <td class="py-3 px-4 border-b">{{ usuario.apellido_paterno }}</td>
+          <td class="py-3 px-4 border-b">{{ usuario.apellido_materno }}</td>
+          <td class="py-3 px-4 border-b">{{ usuario.fecha_nacimiento | date }}</td>
+          <td class="py-3 px-4 border-b">{{ usuario.username }}</td>
+          <td class="py-3 px-4 border-b">{{ usuario.telefono || 'No disponible' }}</td>
+          <td class="py-3 px-4 border-b">{{ usuario.genero || 'No especificado' }}</td>
+          <td class="py-3 px-4 border-b">{{ usuario.estado || 'Inactivo' }}</td>
         </tr>
       </tbody>
     </nz-table>
-  
-    <!-- Paginación -->
-    <nz-pagination
-      [nzPageIndex]="currentPage"
-      [nzPageSize]="itemsPerPage"
-      [nzTotal]="total"
-      (nzPageIndexChange)="onPageChange($event)"
-      [nzShowSizeChanger]="false"
-    ></nz-pagination>
   </div>
-  
+
+  <!-- Paginación -->
+  <nz-pagination
+    [nzPageIndex]="currentPage"
+    [nzPageSize]="itemsPerPage"
+    [nzTotal]="total"
+    (nzPageIndexChange)="onPageChange($event)"
+    [nzShowSizeChanger]="false"
+    class="mt-6 text-center"
+  ></nz-pagination>
+</div>

@@ -1,37 +1,47 @@
-<div class="bitacora-container">
-    <h2>Bitácora de Actividades</h2>
-    
-    <!-- Tabla de bitácora -->
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>IP</th>
-          <th>CI</th>
-          <th>Fecha</th>
-          <th>Hora</th>
-          <th>Acción</th>
-          <th>Tabla Afectada</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let registro of paginatedBitacora">
-          <td>{{ registro.id }}</td>
-          <td>{{ registro.ip }}</td>
-          <td>{{ registro.ci }}</td>
-          <td>{{ registro.fecha }}</td>
-          <td>{{ registro.hora }}</td> <!-- Usando DatePipe -->
-          <td>{{ registro.accion }}</td>
-          <td>{{ registro.tablaAfectada }}</td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <!-- Controles de paginación -->
-    <div class="pagination">
-      <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-      <span>Página {{ currentPage }} de {{ totalPages }}</span>
-      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
-    </div>
+<div class="bitacora-container p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg mx-auto max-w-4xl">
+   <h2 class="text-3xl font-semibold text-center text-blue-600 mb-6 uppercase tracking-wide">Bitácora de Actividades</h2>
+  <!-- Tabla de bitácora -->
+  <table class="min-w-full table-auto bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden shadow-md">
+    <thead>
+      <tr class="bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300">
+        <th class="px-4 py-2 text-left">ID</th>
+        <th class="px-4 py-2 text-left">IP</th>
+        <th class="px-4 py-2 text-left">CI</th>
+        <th class="px-4 py-2 text-left">Fec</th>
+        <th class="px-4 py-2 text-left">Hora</th>
+        <th class="px-4 py-2 text-left">Acción</th>
+        <th class="px-4 py-2 text-left">Tabla Afectada</th>
+      </tr>
+    </thead>
+    <tbody class="text-gray-600 dark:text-gray-300">
+      <tr *ngFor="let registro of paginatedBitacora" class="border-t border-gray-300 dark:border-gray-600">
+        <td class="px-4 py-2">{{ registro.id }}</td>
+        <td class="px-4 py-2">{{ registro.ip }}</td>
+        <td class="px-4 py-2">{{ registro.ci }}</td>
+        <td class="px-4 py-2">{{ registro.fecha }}</td>
+        <td class="px-4 py-2">{{ registro.hora }}</td>
+        <td class="px-4 py-2">{{ registro.accion }}</td>
+        <td class="px-4 py-2">{{ registro.tablaAfectada }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Controles de paginación -->
+  <div class="flex justify-between items-center mt-6">
+    <button 
+      (click)="previousPage()" 
+      [disabled]="currentPage === 1" 
+      class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 disabled:bg-gray-400"
+    >
+      Anterior
+    </button>
+    <span class="text-lg font-semibold text-gray-700 dark:text-gray-300">Página {{ currentPage }} de {{ totalPages }}</span>
+    <button 
+      (click)="nextPage()" 
+      [disabled]="currentPage === totalPages" 
+      class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 disabled:bg-gray-400"
+    >
+      Siguiente
+    </button>
   </div>
-  
+</div>

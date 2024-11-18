@@ -1,69 +1,109 @@
-<div class="departamentos-container">
-    <h2>Gestionar Departamentos</h2>
-  
-    <!-- Crear nuevo departamento -->
-    <div class="create-departamento">
-      <nz-input-group>
-        <input type="text" nz-input placeholder="Nombre del departamento" [(ngModel)]="newDepartamento.nombre" />
-        <input type="text" nz-input placeholder="Dirección" [(ngModel)]="newDepartamento.direccion" />
-      </nz-input-group>
-      <button nz-button nzType="primary" (click)="createDepartamento()" class="create-btn">
-        <span nz-icon nzType="plus"></span> Crear Departamento
+<div class="departamentos-container p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg mx-auto max-w-5xl">
+  <h2 class="text-2xl font-semibold text-cyan-500 dark:text-cyan-300 text-center mb-6">Gestionar Áreas de Atención</h2>
+
+  <!-- Crear nuevo departamento -->
+  <div class="create-Area mb-6">
+    <div class="space-y-4">
+      <div class="flex gap-4">
+        <input 
+          type="text" 
+          nz-input 
+          placeholder="Nombre del Area" 
+          [(ngModel)]="newDepartamento.nombre" 
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300"
+        />
+        <input 
+          type="text" 
+          nz-input 
+          placeholder="Dirección" 
+          [(ngModel)]="newDepartamento.direccion" 
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300"
+        />
+      </div>
+      <button 
+        nz-button 
+        nzType="primary" 
+        (click)="createDepartamento()" 
+        class="w-full px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <span nz-icon nzType="plus"></span> Crear Áreas de Atención
       </button>
     </div>
-  
-    <!-- Tabla de departamentos -->
-    <nz-table [nzData]="departamentos" [nzBordered]="false">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Dirección</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let departamento of departamentos">
-          <td>{{ departamento.id }}</td>
-          <td *ngIf="editedDepartamento?.id !== departamento.id">{{ departamento.nombre }}</td>
-          <td *ngIf="editedDepartamento?.id !== departamento.id">{{ departamento.direccion }}</td>
-          <td *ngIf="editedDepartamento?.id === departamento.id">
-            <input nz-input [(ngModel)]="editDepartamentoData.nombre" type="text" />
-            <input nz-input [(ngModel)]="editDepartamentoData.direccion" type="text" />
-          </td>
-          <td>
-            <!-- Botones de acción -->
-            <ng-container *ngIf="editedDepartamento?.id !== departamento.id">
-              <button nz-button nzType="default" (click)="editDepartamento(departamento)" class="edit-btn">
-                <span nz-icon nzType="edit"></span>
-              </button>
-              <button nz-button nzType="default" nzDanger (click)="confirmDelete(departamento.id)" class="delete-btn">
-                <span nz-icon nzType="delete"></span>
-              </button>
-            </ng-container>
-            <ng-container *ngIf="editedDepartamento?.id === departamento.id">
-              <button nz-button nzType="primary" (click)="saveDepartamento()" class="save-btn">
-                <span nz-icon nzType="save"></span>
-              </button>
-              <button nz-button nzType="default" (click)="cancelEdit()" class="cancel-btn">
-                <span nz-icon nzType="close"></span>
-              </button>
-            </ng-container>
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
   </div>
-  
-  <!-- Modal de confirmación para eliminar -->
-  <nz-modal
-    [(nzVisible)]="isDeleteModalVisible"
-    nzTitle="Confirmar Eliminación"
-    (nzOnCancel)="handleCancelDelete()"
-    (nzOnOk)="handleOkDelete()"
-    [nzOkText]="'Eliminar'"
-    [nzOkType]="'primary'"
-    [nzCancelText]="'Cancelar'"
-  >
-    <p>¿Está seguro de que desea eliminar este departamento?</p>
-  </nz-modal>
+
+  <!-- Tabla de departamentos -->
+  <nz-table [nzData]="departamentos" [nzBordered]="false" class="min-w-full table-auto bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden shadow-md">
+    <thead>
+      <tr class="bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300">
+        <th class="px-4 py-2 text-left">ID</th>
+        <th class="px-4 py-2 text-left">Nombre</th>
+        <th class="px-4 py-2 text-left">Dirección</th>
+        <th class="px-4 py-2 text-left">Acciones</th>
+      </tr>
+    </thead>
+    <tbody class="text-gray-600 dark:text-gray-300">
+      <tr *ngFor="let departamento of departamentos" class="border-t border-gray-300 dark:border-gray-600">
+        <td class="px-4 py-2">{{ departamento.id }}</td>
+        <td *ngIf="editedDepartamento?.id !== departamento.id" class="px-4 py-2">{{ departamento.nombre }}</td>
+        <td *ngIf="editedDepartamento?.id !== departamento.id" class="px-4 py-2">{{ departamento.direccion }}</td>
+        <td *ngIf="editedDepartamento?.id === departamento.id" class="px-4 py-2">
+          <input nz-input [(ngModel)]="editDepartamentoData.nombre" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300"/>
+          <input nz-input [(ngModel)]="editDepartamentoData.direccion" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300"/>
+        </td>
+        <td class="px-4 py-2 flex space-x-2">
+          <!-- Botones de acción -->
+          <ng-container *ngIf="editedDepartamento?.id !== departamento.id">
+            <button 
+              nz-button 
+              nzType="default" 
+              (click)="editDepartamento(departamento)" 
+              class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            >
+              <span nz-icon nzType="edit"></span>
+            </button>
+            <button 
+              nz-button 
+              nzType="default" 
+              nzDanger 
+              (click)="confirmDelete(departamento.id)" 
+              class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+            >
+              <span nz-icon nzType="delete"></span>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="editedDepartamento?.id === departamento.id">
+            <button 
+              nz-button 
+              nzType="primary" 
+              (click)="saveDepartamento()" 
+              class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <span nz-icon nzType="save"></span>
+            </button>
+            <button 
+              nz-button 
+              nzType="default" 
+              (click)="cancelEdit()" 
+              class="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            >
+              <span nz-icon nzType="close"></span>
+            </button>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<!-- Modal de confirmación para eliminar -->
+<nz-modal
+  [(nzVisible)]="isDeleteModalVisible"
+  nzTitle="Confirmar Eliminación"
+  (nzOnCancel)="handleCancelDelete()"
+  (nzOnOk)="handleOkDelete()"
+  [nzOkText]="'Eliminar'"
+  [nzOkType]="'primary'"
+  [nzCancelText]="'Cancelar'"
+>
+  <p class="text-gray-600 dark:text-gray-300">¿Está seguro de que desea eliminar este departamento?</p>
+</nz-modal>

@@ -1,34 +1,31 @@
-<div class="horarios-container">
-  <h2>Gestionar Horarios Médicos</h2>
+<div class="horarios-container space-y-6 p-4">
+  <h2 class="text-2xl font-bold mb-4">Gestionar Horarios Médicos</h2>
 
   <!-- Selector de Médico -->
   <div class="form-group">
-    <label>Selecciona un Médico:</label>
+    <label for="medico-select">Selecciona un Médico:</label>
     <nz-select
+      id="medico-select"
       [(ngModel)]="selectedMedicoId"
       (ngModelChange)="loadHorariosPorMedicoYFecha()"
       nzPlaceHolder="Selecciona un médico"
       style="width: 100%"
     >
-      <!-- Opción para ver todos los horarios -->
       <nz-option [nzValue]="null" nzLabel="Ver todos"></nz-option>
-
-      <nz-option
-        *ngFor="let medico of medicos"
-        [nzValue]="medico.id"
-        [nzLabel]="medico.nombre"
-      ></nz-option>
+      <nz-option *ngFor="let medico of medicos" [nzValue]="medico.id" [nzLabel]="medico.nombre"></nz-option>
     </nz-select>
   </div>
 
   <!-- Selector de Fecha -->
   <div class="form-group">
-    <label>Selecciona una Fecha:</label>
+    <label for="fecha-input">Selecciona una Fecha:</label>
     <input
+      id="fecha-input"
       nz-input
       type="date"
       [(ngModel)]="selectedDate"
       (ngModelChange)="loadHorariosPorMedicoYFecha()"
+      aria-label="Fecha de horario médico"
     />
   </div>
 
@@ -38,12 +35,12 @@
   </div>
 
   <!-- Botón para abrir el modal de creación/edición de horario -->
-  <button nz-button nzType="primary" (click)="openCreateModal()">
+  <button nz-button nzType="primary" (click)="openCreateModal()" aria-label="Crear Horario Médico">
     <span nz-icon nzType="plus"></span> Crear Horario Médico
   </button>
 
   <!-- Tabla de horarios médicos filtrada -->
-  <table *ngIf="horarios.length > 0">
+  <table *ngIf="horarios.length > 0" class="min-w-full table-auto">
     <thead>
       <tr>
         <th>ID</th>
@@ -67,17 +64,12 @@
         <td>{{ horario.cupoDisponible }}</td>
         <td>{{ horario.medico.nombre || "N/A" }}</td>
         <td>{{ horario.servicio.nombre || "N/A" }}</td>
-        <td>
+        <td class="space-x-2">
           <!-- Botones de acción con iconos -->
-          <button nz-button nzType="default" (click)="openEditModal(horario)">
+          <button nz-button nzType="default" (click)="openEditModal(horario)" aria-label="Editar horario">
             <span nz-icon nzType="edit"></span>
           </button>
-          <button
-            nz-button
-            nzType="default"
-            nzDanger
-            (click)="confirmDelete(horario.id!)"
-          >
+          <button nz-button nzType="default" nzDanger (click)="confirmDelete(horario.id!)" aria-label="Eliminar horario">
             <span nz-icon nzType="delete"></span>
           </button>
         </td>
@@ -86,37 +78,29 @@
   </table>
 
   <!-- Mensaje si no hay horarios -->
-  <div *ngIf="horarios.length === 0">
+  <div *ngIf="horarios.length === 0" class="text-center text-gray-500">
     No hay horarios disponibles para este médico en la fecha seleccionada.
   </div>
 
   <!-- Paginación -->
   <div class="pagination-container" *ngIf="totalPages > 1">
-    <button nz-button (click)="previousPage()" [disabled]="currentPage === 1">
+    <button nz-button (click)="previousPage()" [disabled]="currentPage === 1" aria-label="Página anterior">
       Anterior
     </button>
     <span>Página {{ currentPage }} de {{ totalPages }}</span>
-    <button
-      nz-button
-      (click)="nextPage()"
-      [disabled]="currentPage === totalPages"
-    >
+    <button nz-button (click)="nextPage()" [disabled]="currentPage === totalPages" aria-label="Página siguiente">
       Siguiente
     </button>
   </div>
 
   <!-- Modal de Crear/Editar Horario Médico -->
-  <nz-modal
-    [(nzVisible)]="isModalVisible"
-    [nzTitle]="modalTitle"
-    (nzOnCancel)="handleCancel()"
-    (nzOnOk)="handleOk()"
-  >
+  <nz-modal [(nzVisible)]="isModalVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <div *nzModalContent>
       <form #horarioForm="ngForm">
         <div class="form-group">
-          <label>Fecha:</label>
+          <label for="fecha-modal">Fecha:</label>
           <input
+            id="fecha-modal"
             nz-input
             type="date"
             [(ngModel)]="editHorarioData.fecha"
@@ -127,8 +111,9 @@
         </div>
 
         <div class="form-group">
-          <label>Hora de Inicio:</label>
+          <label for="horaInicio-modal">Hora de Inicio:</label>
           <input
+            id="horaInicio-modal"
             nz-input
             type="time"
             [(ngModel)]="editHorarioData.horaInicio"
@@ -139,8 +124,9 @@
         </div>
 
         <div class="form-group">
-          <label>Hora de Fin:</label>
+          <label for="horaFin-modal">Hora de Fin:</label>
           <input
+            id="horaFin-modal"
             nz-input
             type="time"
             [(ngModel)]="editHorarioData.horaFin"
@@ -151,24 +137,21 @@
         </div>
 
         <div class="form-group">
-          <label>Médico:</label>
+          <label for="medico-select-modal">Médico:</label>
           <nz-select
+            id="medico-select-modal"
             [(ngModel)]="editHorarioData.medico.id"
             name="medicoId"
             nzPlaceHolder="Selecciona un médico"
             required
             style="width: 100%"
-         
           >
-            <nz-option
-              *ngFor="let medico of medicos"
-              [nzValue]="medico.id"
-              [nzLabel]="medico.nombre"
-            ></nz-option>
+            <nz-option *ngFor="let medico of medicos" [nzValue]="medico.id" [nzLabel]="medico.nombre"></nz-option>
           </nz-select>
 
-          <label>Servicio:</label>
+          <label for="servicio-select-modal">Servicio:</label>
           <nz-select
+            id="servicio-select-modal"
             [(ngModel)]="editHorarioData.servicio.id"
             name="servicioId"
             nzPlaceHolder="Selecciona un servicio"
@@ -176,17 +159,14 @@
             style="width: 100%"
             [disabled]="isEditMode"
           >
-            <nz-option
-              *ngFor="let servicio of servicios"
-              [nzValue]="servicio.id"
-              [nzLabel]="servicio.nombre"
-            ></nz-option>
+            <nz-option *ngFor="let servicio of servicios" [nzValue]="servicio.id" [nzLabel]="servicio.nombre"></nz-option>
           </nz-select>
         </div>
 
         <div class="form-group">
-          <label>Duración del Bloque (en minutos):</label>
+          <label for="duracionCitaMin">Duración del Bloque (en minutos):</label>
           <input
+            id="duracionCitaMin"
             nz-input
             type="number"
             [(ngModel)]="time"
@@ -195,8 +175,7 @@
             required
           />
           <small class="form-text text-muted">
-            Ingresa 0 para crear un solo bloque desde la hora de inicio hasta la
-            hora de fin.
+            Ingresa 0 para crear un solo bloque desde la hora de inicio hasta la hora de fin.
           </small>
         </div>
 
@@ -236,9 +215,6 @@
               </tr>
             </tbody>
           </table>
-          <p>Cupo Total: {{ editHorarioData.cupoTotal }}</p>
-          <p>Cupo Disponible: {{ editHorarioData.cupoDisponible }}</p>
-          <!-- Mostrar cupo disponible -->
         </div>
       </form>
     </div>

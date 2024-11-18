@@ -1,51 +1,43 @@
 <nz-layout class="home-layout">
-  <nz-content
+  <nz-content 
     class="home-content"
-    [ngStyle]="{
-      'background-size': 'cover',
-      'background-position': 'center'
-    }"
-  >
-    <h1 nz-typography class="home-title">Bienvenido al Sistema de Gestión Clínica</h1>
-
-    <p nz-paragraph class="home-description">
-      Este sistema está diseñado para facilitar la administración de tu clínica, permitiéndote gestionar pacientes, citas, historiales médicos y mucho más de forma sencilla y eficiente.
-    </p>
-
-    <h2 nz-typography class="home-subtitle">Características Principales:</h2>
-    <ul nz-typography class="feature-list">
-      <p>Gestión completa de pacientes y sus historiales médicos
-        <br>
-        Organización y seguimiento de citas y horarios
-        <br>
-        Acceso seguro y controlado a la información
-        <br>
-        Interfaz amigable y fácil de usar
+    [ngStyle]="{'background-color': '#a7d8ff', 'background-size': 'cover', 'background-position': 'center'}">
+    
+    <!-- Contenedor principal centrado -->
+    <div class="content-container flex flex-col items-center justify-center min-h-screen text-center p-6 space-y-8">
+      
+      <!-- Título con estilo moderno -->
+      <h1 nz-typography class="text-4xl font-semibold text-blue-900 drop-shadow-md">
+        Bienvenido a la Aplicación
+      </h1>
+      
+      <!-- Descripción con un estilo más limpio y moderno -->
+      <p nz-paragraph class="text-lg text-blue-800 opacity-90 leading-relaxed max-w-lg mx-auto">
+        Esta es la página de inicio de nuestro sistema para clínicas. Desde aquí podrás acceder a las funcionalidades de la aplicación que te ayudarán a gestionar tus pacientes y servicios de manera eficiente.
       </p>
-    </ul>
 
-    <div class="button-group">
-      <button
-        nz-button
-        nzType="primary"
-        nzShape="round"
-        nzSize="large"
-        class="action-button"
-        (click)="goToLogin()"
-      >
-        Iniciar Sesión
-      </button>
+      <!-- Grupo de botones con transiciones suaves -->
+      <div class="button-group space-x-4">
+        <button 
+          nz-button 
+          nzType="primary" 
+          nzShape="round" 
+          nzSize="large" 
+          (click)="goToLogin()"
+          class="transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none">
+          Iniciar Sesión
+        </button>
+        <button 
+          nz-button 
+          nzType="default" 
+          nzShape="round" 
+          nzSize="large" 
+          (click)="goToRegister()"
+          class="transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none">
+          Registrarse
+        </button>
+      </div>
 
-      <button
-        nz-button
-        nzType="default"
-        nzShape="round"
-        nzSize="large"
-        class="action-button"
-        (click)="goToRegister()"
-      >
-        Registrarse
-      </button>
     </div>
   </nz-content>
 </nz-layout>

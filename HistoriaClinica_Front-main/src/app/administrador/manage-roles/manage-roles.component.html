@@ -1,52 +1,53 @@
-<div class="roles-container">
-    <h2>Gestionar Roles</h2>
-  
-    <!-- Crear nuevo rol -->
-    <div class="create-role">
-      <nz-input-group [nzSuffix]="suffixIcon">
-        <input type="text" nz-input placeholder="Nuevo rol" [(ngModel)]="newRoleName" />
-      </nz-input-group>
-      <ng-template #suffixIcon>
-        <span nz-icon nzType="plus"></span>
-      </ng-template>
-      <button nz-button nzType="primary" (click)="createRole()" class="create-btn">
-        <span nz-icon nzType="plus"></span>
-        Crear Rol
-      </button>
-    </div>
-  
-    <!-- Tabla de roles -->
-    <nz-table [nzData]="roles" [nzBordered]="false">
-      <thead>
+<div class="roles-container p-6 bg-white rounded-lg shadow-lg mt-6 transition-all ease-in-out duration-300">
+  <h2 class="text-3xl font-semibold text-center text-blue-600 mb-6 uppercase tracking-wide">Gestionar Roles</h2>
+
+  <!-- Crear nuevo rol -->
+  <div class="create-role mb-6 flex items-center space-x-4">
+    <nz-input-group [nzSuffix]="suffixIcon" class="w-full">
+      <input type="text" nz-input placeholder="Nuevo rol" [(ngModel)]="newRoleName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+    </nz-input-group>
+    <ng-template #suffixIcon>
+      <span nz-icon nzType="plus" class="text-blue-600"></span>
+    </ng-template>
+    <button nz-button nzType="primary" (click)="createRole()" class="create-btn p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
+      <span nz-icon nzType="plus" class="mr-2"></span>
+      Crear Rol
+    </button>
+  </div>
+
+  <!-- Tabla de roles -->
+  <div class="overflow-x-auto">
+    <nz-table [nzData]="roles" [nzBordered]="false" class="w-full table-auto border-collapse shadow-sm">
+      <thead class="bg-gray-100 text-left text-gray-700">
         <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Acciones</th>
+          <th class="py-3 px-4 border-b">ID</th>
+          <th class="py-3 px-4 border-b">Nombre</th>
+          <th class="py-3 px-4 border-b">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let role of roles">
-          <td>{{ role.id }}</td>
-          <td *ngIf="editedRole?.id !== role.id">{{ role.nombre }}</td>
-          <td *ngIf="editedRole?.id === role.id">
-            <input nz-input [(ngModel)]="editRoleName" type="text" />
+        <tr *ngFor="let role of roles" class="hover:bg-gray-50">
+          <td class="py-3 px-4 border-b">{{ role.id }}</td>
+          <td class="py-3 px-4 border-b" *ngIf="editedRole?.id !== role.id">{{ role.nombre }}</td>
+          <td class="py-3 px-4 border-b" *ngIf="editedRole?.id === role.id">
+            <input nz-input [(ngModel)]="editRoleName" type="text" class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
           </td>
-          <td>
+          <td class="py-3 px-4 border-b">
             <!-- Botones de acción -->
             <ng-container *ngIf="editedRole?.id !== role.id">
-              <button nz-button nzType="default" (click)="editRole(role)" class="edit-btn">
-                <span nz-icon nzType="edit"></span>
+              <button nz-button nzType="default" (click)="editRole(role)" class="edit-btn p-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-200">
+                <span nz-icon nzType="edit" class="mr-2"></span> Editar
               </button>
-              <button nz-button nzType="default" nzDanger (click)="confirmDelete(role.id)" class="delete-btn">
-                <span nz-icon nzType="delete"></span>
+              <button nz-button nzType="default" nzDanger (click)="confirmDelete(role.id)" class="delete-btn p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200">
+                <span nz-icon nzType="delete" class="mr-2"></span> Eliminar
               </button>
             </ng-container>
             <ng-container *ngIf="editedRole?.id === role.id">
-              <button nz-button nzType="primary" (click)="saveRole()" class="save-btn">
-                <span nz-icon nzType="save"></span>
+              <button nz-button nzType="primary" (click)="saveRole()" class="save-btn p-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200">
+                <span nz-icon nzType="save" class="mr-2"></span> Guardar
               </button>
-              <button nz-button nzType="default" (click)="cancelEdit()" class="cancel-btn">
-                <span nz-icon nzType="close"></span>
+              <button nz-button nzType="default" (click)="cancelEdit()" class="cancel-btn p-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition duration-200">
+                <span nz-icon nzType="close" class="mr-2"></span> Cancelar
               </button>
             </ng-container>
           </td>
@@ -54,7 +55,7 @@
       </tbody>
     </nz-table>
   </div>
-  
+
   <!-- Modal de confirmación para eliminar -->
   <nz-modal
     [(nzVisible)]="isDeleteModalVisible"
@@ -64,7 +65,8 @@
     [nzOkText]="'Eliminar'"
     [nzOkType]="'primary'"
     [nzCancelText]="'Cancelar'"
+    class="rounded-lg shadow-lg"
   >
     <p>¿Está seguro de que desea eliminar este rol?</p>
   </nz-modal>
-  
+</div>

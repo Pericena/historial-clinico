@@ -1,121 +1,125 @@
-<div class="empleados-container">
-    <h2>Gestionar Empleados</h2>
-    <div class="actions">
-      <button nz-button nzType="primary" (click)="openModal()">Crear Empleado</button>
-      <nz-input-group [nzSuffix]="suffixIcon" class="search-input">
-        <input type="text" nz-input placeholder="Buscar por nombre" [(ngModel)]="searchTerm" (input)="filterEmpleados()" />
-      </nz-input-group>
-      <ng-template #suffixIcon>
-        <i nz-icon nzType="search"></i>
-      </ng-template>
-    </div>
-  
-    <!-- Tabla de empleados -->
-    <nz-table
-      #empleadosTable
-      [nzData]="empleadosPaginados"
-      [nzFrontPagination]="false"
-      [nzTotal]="totalItems"
-      [nzPageSize]="pageSize"
-      [nzPageIndex]="currentPage"
-      (nzPageIndexChange)="onPageChange($event)"
-    >
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Especialidad</th>
-          <th>Estado</th>
-          <th>Fecha de Contratación</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let empleado of empleadosPaginados">
-          <td>{{ empleado.id }}</td>
-          <td>{{ empleado.user.nombre }}</td>
-          <td>{{ empleado.user.apellido_paterno }}</td>
-          <td>{{ empleado.especialidades[0]?.nombre }}</td>
-          <td>{{ empleado.estado }}</td>
-          <td>{{ empleado.fechaContratacion | date:'dd/MM/yyyy' }}</td>
-          <td>
-            <button nz-button nzType="default" (click)="openModal(true, empleado)">
-              <i nz-icon nzType="edit"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
-  
-    <!-- Modal para crear o editar empleado -->
-    <nz-modal
-      [(nzVisible)]="isModalOpen"
-      [nzTitle]="isEditing ? 'Editar Empleado' : 'Crear Empleado'"
-      (nzOnCancel)="closeModal()"
-      (nzOnOk)="isEditing ? saveEmpleado() : createEmpleado()"
-      [nzOkText]="isEditing ? 'Guardar Cambios' : 'Crear Empleado'"
-    >
-      <form nz-form>
-        <nz-form-item>
-          <nz-form-label [nzSpan]="6">CI</nz-form-label>
-          <nz-form-control [nzSpan]="18">
-            <input nz-input [(ngModel)]="editEmpleadoData.user.ci" name="ci" required (blur)="autoFillForm(editEmpleadoData.user.ci)" />
-          </nz-form-control>
-        </nz-form-item>
-  
-        <nz-form-item>
-          <nz-form-label [nzSpan]="6">Nombre</nz-form-label>
-          <nz-form-control [nzSpan]="18">
-            <input nz-input [(ngModel)]="editEmpleadoData.user.nombre" name="nombre" required />
-          </nz-form-control>
-        </nz-form-item>
-  
-        <nz-form-item>
-          <nz-form-label [nzSpan]="6">Apellido Paterno</nz-form-label>
-          <nz-form-control [nzSpan]="18">
-            <input nz-input [(ngModel)]="editEmpleadoData.user.apellido_paterno" name="apellidoPaterno" required />
-          </nz-form-control>
-        </nz-form-item>
-  
-        <nz-form-item>
-          <nz-form-label [nzSpan]="6">Apellido Materno</nz-form-label>
-          <nz-form-control [nzSpan]="18">
-            <input nz-input [(ngModel)]="editEmpleadoData.user.apellido_materno" name="apellidoMaterno" required />
-          </nz-form-control>
-        </nz-form-item>
-  
-        <nz-form-item>
-          <nz-form-label [nzSpan]="6">Teléfono</nz-form-label>
-          <nz-form-control [nzSpan]="18">
-            <input nz-input [(ngModel)]="editEmpleadoData.user.telefono" name="telefono" />
-          </nz-form-control>
-        </nz-form-item>
-  
-        <nz-form-item>
-          <nz-form-label [nzSpan]="6">Email</nz-form-label>
-          <nz-form-control [nzSpan]="18">
-            <input nz-input type="email" [(ngModel)]="editEmpleadoData.user.email" name="email" />
-          </nz-form-control>
-        </nz-form-item>
-  
-        <nz-form-item>
-          <nz-form-label [nzSpan]="6">Estado</nz-form-label>
-          <nz-form-control [nzSpan]="18">
-            <nz-select [(ngModel)]="editEmpleadoData.estado" name="estado">
-              <nz-option nzValue="Activo" nzLabel="Activo"></nz-option>
-              <nz-option nzValue="Inactivo" nzLabel="Inactivo"></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-  
-        <nz-form-item>
-          <nz-form-label [nzSpan]="6">Fecha de Contratación</nz-form-label>
-          <nz-form-control [nzSpan]="18">
-            <nz-date-picker [(ngModel)]="editEmpleadoData.fechaContratacion" name="fechaContratacion"></nz-date-picker>
-          </nz-form-control>
-        </nz-form-item>
-      </form>
-    </nz-modal>
+<div class="empleados-container p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+  <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Gestionar Empleados</h2>
+
+  <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+    <button nz-button nzType="primary" (click)="openModal()" class="bg-blue-500 text-white hover:bg-blue-600 px-6 py-3 rounded-md w-full md:w-auto">
+      Crear Empleado
+    </button>
+    <nz-input-group [nzSuffix]="suffixIcon" class="search-input w-full md:w-64">
+      <input type="text" nz-input placeholder="Buscar por nombre" [(ngModel)]="searchTerm" (input)="filterEmpleados()" class="px-4 py-2 border rounded-md w-full" />
+    </nz-input-group>
+    <ng-template #suffixIcon>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
   </div>
-  
+
+  <!-- Tabla de empleados -->
+  <nz-table
+    #empleadosTable
+    [nzData]="empleadosPaginados"
+    [nzFrontPagination]="false"
+    [nzTotal]="totalItems"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="currentPage"
+    (nzPageIndexChange)="onPageChange($event)"
+    class="table-auto w-full text-left border-separate border-spacing-0"
+  >
+    <thead>
+      <tr>
+        <th class="px-4 py-2 font-semibold text-gray-700 dark:text-gray-300">ID</th>
+        <th class="px-4 py-2 font-semibold text-gray-700 dark:text-gray-300">Nombre</th>
+        <th class="px-4 py-2 font-semibold text-gray-700 dark:text-gray-300">Apellido</th>
+        <th class="px-4 py-2 font-semibold text-gray-700 dark:text-gray-300">Especialidad</th>
+        <th class="px-4 py-2 font-semibold text-gray-700 dark:text-gray-300">Estado</th>
+        <th class="px-4 py-2 font-semibold text-gray-700 dark:text-gray-300">Fecha de Contratación</th>
+        <th class="px-4 py-2 font-semibold text-gray-700 dark:text-gray-300">Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let empleado of empleadosPaginados">
+        <td class="px-4 py-2 border-t border-b text-gray-600 dark:text-gray-400">{{ empleado.id }}</td>
+        <td class="px-4 py-2 border-t border-b text-gray-600 dark:text-gray-400">{{ empleado.user.nombre }}</td>
+        <td class="px-4 py-2 border-t border-b text-gray-600 dark:text-gray-400">{{ empleado.user.apellido_paterno }}</td>
+        <td class="px-4 py-2 border-t border-b text-gray-600 dark:text-gray-400">{{ empleado.especialidades[0]?.nombre }}</td>
+        <td class="px-4 py-2 border-t border-b text-gray-600 dark:text-gray-400">{{ empleado.estado }}</td>
+        <td class="px-4 py-2 border-t border-b text-gray-600 dark:text-gray-400">{{ empleado.fechaContratacion | date:'dd/MM/yyyy' }}</td>
+        <td class="px-4 py-2 border-t border-b">
+          <button nz-button nzType="default" (click)="openModal(true, empleado)" class="bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 rounded-md">
+            <i nz-icon nzType="edit"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <!-- Modal para crear o editar empleado -->
+  <nz-modal
+    [(nzVisible)]="isModalOpen"
+    [nzTitle]="isEditing ? 'Editar Empleado' : 'Crear Empleado'"
+    (nzOnCancel)="closeModal()"
+    (nzOnOk)="isEditing ? saveEmpleado() : createEmpleado()"
+    [nzOkText]="isEditing ? 'Guardar Cambios' : 'Crear Empleado'"
+    class="dark:bg-gray-800 dark:text-white"
+  >
+    <form nz-form class="space-y-6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">CI</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input [(ngModel)]="editEmpleadoData.user.ci" name="ci" required (blur)="autoFillForm(editEmpleadoData.user.ci)" class="px-4 py-2 border rounded-md w-full" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Nombre</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input [(ngModel)]="editEmpleadoData.user.nombre" name="nombre" required class="px-4 py-2 border rounded-md w-full" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Apellido Paterno</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input [(ngModel)]="editEmpleadoData.user.apellido_paterno" name="apellidoPaterno" required class="px-4 py-2 border rounded-md w-full" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Apellido Materno</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input [(ngModel)]="editEmpleadoData.user.apellido_materno" name="apellidoMaterno" required class="px-4 py-2 border rounded-md w-full" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Teléfono</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input [(ngModel)]="editEmpleadoData.user.telefono" name="telefono" class="px-4 py-2 border rounded-md w-full" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Email</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input type="email" [(ngModel)]="editEmpleadoData.user.email" name="email" class="px-4 py-2 border rounded-md w-full" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Estado</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <nz-select [(ngModel)]="editEmpleadoData.estado" name="estado" class="w-full">
+            <nz-option nzValue="Activo" nzLabel="Activo"></nz-option>
+            <nz-option nzValue="Inactivo" nzLabel="Inactivo"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Fecha de Contratación</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <nz-date-picker [(ngModel)]="editEmpleadoData.fechaContratacion" name="fechaContratacion" class="w-full" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-modal>
+</div>
